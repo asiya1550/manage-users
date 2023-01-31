@@ -15,7 +15,7 @@ const Login = () => {
       const provider = await new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const { user } = result;
-
+      //Todo authenticate from users collection
     }
     catch (error) {
       console.error(error);

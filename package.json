@@ -5,7 +5,6 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@faker-js/faker": "^7.6.0",
     "@mui/material": "^5.11.6",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.16.5",
@@ -16,8 +15,8 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "dotenv": "^16.0.3",
-    "faker": "^6.6.6",
     "firebase": "^9.16.0",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -27,8 +26,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
-    "addUsers": "node ./src/scripts/addUsers.tsx"
+    "start": "set PORT=3001 && react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.191"
   }
 }

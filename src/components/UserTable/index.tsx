@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const UserTable: React.FC = () => {
     const [users, setUsers] = useState<{ [x: string]: any; }[] | undefined | undefined>([])
     const [deleteSucess, setDelSuccess] = useState('')
+    const [showEditUser, setShowEditUser] = useState(false);
 
     useEffect(() => {
         const fetchUserfunc = async () => {
@@ -23,35 +24,39 @@ const UserTable: React.FC = () => {
     }
 
     return (
-        <>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users && users.map((user) => (
-                        <tr key={user.uid}>
-                            <td>{user.email}</td>
-                            <td>{user.role}</td>
-                            <td>
-                                <Link to={`user/${user.uid}`} className='link'>
-                                    <button className="edit-button">Edit</button>
-                                </Link>
 
-                                <button className="delete-button" onClick={(e) => handleDelete(e, user.id)}>Delete</button>
-                            </td>
+        <div>
+            <div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
                         </tr>
-                    ))}
-                </tbody>
+                    </thead>
+                    <tbody>
+                        {users && users.map((user) => (
+                            <tr key={user.uid}>
+                                <td>{user.email}</td>
+                                <td>{user.role}</td>
+                                <td>
+                                    <Link to={`user/${user.id}`} state={{ pre_user: user }} className='link'>
+                                    <button className="edit-button" onClick={() => setShowEditUser(!showEditUser)}>Edit</button>
+                                    </Link>
 
-            </table>
-            {
-                deleteSucess && <div className='success'>{deleteSucess}</div>
-            }
-        </>
+                                    <button className="delete-button" onClick={(e) => handleDelete(e, user.id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+
+                </table>
+                {
+                    deleteSucess && <div className='success'>{deleteSucess}</div>
+                }
+            </div>
+        </div>
     );
 };
 

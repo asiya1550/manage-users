@@ -1,7 +1,7 @@
 import { AppDispatch } from '.';
 import { actions } from './userSlice'
 import { db } from '../services/firebaseConf'
-import { collection, deleteDoc, getDocs, getDoc, doc, where, query } from "firebase/firestore";
+import { collection, deleteDoc, getDocs, getDoc, doc, where, query, updateDoc } from "firebase/firestore";
 
 
 const userRef = collection(db, "users");
@@ -23,10 +23,18 @@ export const fetchUsers = async () => {
 
 export const deleteUser = async (id: string) => {
     try {
-        console.log(id);
+        await deleteDoc(doc(db, "users", id))
 
-        const querySnapshot = await deleteDoc(doc(db, "users", id))
-        console.log(querySnapshot);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const editUser = async (id: string, data: {}) => {
+    try {
+
+        const userRef = doc(db, "users", id);
+        await updateDoc(userRef, data)
 
     } catch (error) {
         console.log(error);
@@ -34,7 +42,7 @@ export const deleteUser = async (id: string) => {
     }
 };
 
-export const getUser = (email: string) => async (dispatch: AppDispatch) => {
+export const stateUser = (email: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(actions.startLoading());
 
@@ -46,9 +54,23 @@ export const getUser = (email: string) => async (dispatch: AppDispatch) => {
 
         if (!data[0]) dispatch(actions.getUserFailure());
         dispatch(actions.getUserSuccess(data[0]));
-        
+
     } catch (error) {
         dispatch(actions.getUserFailure());
+    }
+};
+
+
+export const getUser = async (id: string) => {
+    try {
+        const querySnapshot = await getDoc(doc(db, "users", id));
+        const docID = querySnapshot.id;
+        // const { email, role } = querySnapshot.data()
+        return { id: docID, ...querySnapshot.data() }
+
+    } catch (error) {
+        console.log(error);
+
     }
 };
 

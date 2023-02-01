@@ -8,14 +8,25 @@ import {
   Route
 } from 'react-router-dom'
 import AddUser from "./pages/AddUser";
+import Topbar from "./components/Topbar/Topbar";
+import { usersSelector } from './store/userSlice';
+import { useSelector } from 'react-redux'
+import Employees from "./pages/Employees";
+import EditUser from "./pages/EditUser";
 
 function App() {
+  const { user } = useSelector(usersSelector)
+
   return (
     <Router>
+      <Topbar />
       <Routes >
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/add-user" element={<AddUser />} />
+        <Route path="/add-user" element={['Admin', 'HR'].includes(user.role) ? < AddUser /> : <div>You are not authorize</div>} />
+        <Route path="/employees" element={['Admin', 'HR'].includes(user.role) ? < Employees /> : <div>You are not authorize</div>} />
+        <Route path="/user/:id" element={['Admin', 'HR'].includes(user.role) ? < EditUser /> : <div>You are not authorize</div>} />
+
       </Routes >
     </Router>
   );

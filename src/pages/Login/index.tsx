@@ -1,30 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { app } from '../../services/firebaseConf'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import './index.css';
+import { usersSelector } from '../../store/userSlice';
+import { getUser } from '../../store/actions'
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store/index';
 
 const Login = () => {
-
-  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const { user, loading, hasErrors } = useSelector(usersSelector);
 
   const handleSignInWithGoogle = async () => {
-
-    setLoading(true);
-    try {
-      const auth = getAuth(app);
-      const provider = await new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const { user } = result;
-      //Todo authenticate from users collection
-    }
-    catch (error) {
-      console.error(error);
-    }
-    finally {
-      setLoading(false);
-    }
+    const auth = getAuth(app);
+    const provider = await new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    const userData = result['user'];
+    userData.email && dispatch(getUser(userData.email));
   };
 
+  if (hasErrors) return <p>Unable to get User</p>;
   return (
     <div className='login-page'>
       <div className="" onClick={handleSignInWithGoogle}>
@@ -40,6 +35,8 @@ const Login = () => {
               </button>
             </>
         }
+        {
+          user.email && <div className='success'>{user.email}</div>}
       </div>
     </div>
   );

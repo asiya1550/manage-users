@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { signUp } from "../../services/loginService";
 import './index.css'
 
-
 const AddUsers = () => {
 
     let emailRef = useRef<HTMLInputElement>(null);
@@ -37,7 +36,7 @@ const AddUsers = () => {
     return (
         <div className='addUserPg'>
             <div className='addUserWrap'>
-                <h2>Sign Up</h2>
+                <h2>Add User</h2>
                 <div>
                     <form onSubmit={submitUser} ref={formRef}>
                         <input

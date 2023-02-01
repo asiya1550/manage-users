@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: lightgray;
+  }
+  
+  .edit-button, .delete-button {
+    background-color: lightgray;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .edit-button:hover, .delete-button:hover {
+    background-color: gray;
+  }
+
+  
